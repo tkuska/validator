@@ -8,19 +8,17 @@ use Symfony\Component\Validator\ConstraintValidator;
 class NrTelefonuValidator extends ConstraintValidator {
 
     public function validate($value, Constraint $constraint) {
-        
+
         if (!is_null($value) && $value != '') {
             if (!preg_match("/[0-9]{9,11}$/i", $value) &&
                     !preg_match("/[0-9]{3}$/i", $value) &&
                     !preg_match("/\([0-9]{2}\)[0-9]{7}$/i", $value) &&
                     !preg_match("/\([0-9]{2}\)[0-9]{9}$/i", $value)) {
-                $this->context->addViolation($constraint->message, array('%string%' => $value));
-
-                return false;
+                $this->context->buildViolation($constraint->message)
+                        ->setParameter('%string%', $value)
+                        ->addViolation();
             }
         }
-
-        return true;
     }
 
 }

@@ -5,17 +5,16 @@ namespace Tkuska\ValidationBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class NrDowoduValidator extends ConstraintValidator
-{
-    public function validate($value, Constraint $constraint)
-    {
+class NrDowoduValidator extends ConstraintValidator {
+
+    public function validate($value, Constraint $constraint) {
         if ($value == '') {
             return true;
         }
         if (strlen($value) != 9) {
-            $this->context->addViolation($constraint->message, array('%string%' => $value));
-
-            return false;
+            $this->context->buildViolation($constraint->message)
+                    ->setParameter('%string%', $value)
+                    ->addViolation();
         }
         $suma = 0;
         $wagi = array(7, 3, 1, 9, 7, 3, 1, 7, 3);
@@ -48,19 +47,17 @@ class NrDowoduValidator extends ConstraintValidator
             'Z' => 35
         );
         for ($i = 0; $i < 9; $i++) {
-            if (in_array($value[$i], array_keys($mapa) )) {
+            if (in_array($value[$i], array_keys($mapa))) {
                 $suma += $mapa[$value[$i]] * $wagi[$i];
             } else {
                 $suma += $value[$i] * $wagi[$i];
             }
         }
         if ($suma % 10) {
-            $this->context->addViolation($constraint->message, array('%string%' => $value));
-
-            return false;
+            $this->context->buildViolation($constraint->message)
+                    ->setParameter('%string%', $value)
+                    ->addViolation();
         }
-
-        return true;
     }
 
 }

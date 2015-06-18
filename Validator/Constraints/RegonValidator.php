@@ -5,17 +5,16 @@ namespace Tkuska\ValidationBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class RegonValidator extends ConstraintValidator
-{
-    public function validate($value, Constraint $constraint)
-    {
+class RegonValidator extends ConstraintValidator {
+
+    public function validate($value, Constraint $constraint) {
         if ($value == '') {
             return true;
         }
         if (strlen($value) != 9) {
-            $this->context->addViolation($constraint->message, array('%string%' => $value));
-
-            return false;
+            $this->context->buildViolation($constraint->message)
+                    ->setParameter('%string%', $value)
+                    ->addViolation();
         }
         $arrSteps = array(8, 9, 2, 3, 4, 5, 6, 7);
         $intSum = 0;
@@ -26,9 +25,9 @@ class RegonValidator extends ConstraintValidator
         if ($intControlNr == $value[8]) {
             return true;
         }
-        $this->context->addViolation($constraint->message, array('%string%' => $value));
-
-        return false;
+        $this->context->buildViolation($constraint->message)
+                ->setParameter('%string%', $value)
+                ->addViolation();
     }
 
 }

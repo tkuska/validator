@@ -14,9 +14,10 @@ class NipValidator extends ConstraintValidator
         }
         $value = preg_replace("/[^0-9]+/", "", $value);
         if (strlen($value) != 10) {
-            $this->context->addViolation($constraint->message, array('%string%' => $value));
+            $this->context->buildViolation($constraint->message)
+                    ->setParameter('%string%', $value)
+                    ->addViolation();
 
-            return false;
         }
         $arrSteps = array(6, 5, 7, 2, 3, 4, 5, 6, 7);
         $intSum = 0;
@@ -27,9 +28,9 @@ class NipValidator extends ConstraintValidator
         if ($intControlNr == $str[9]) {
             return true;
         }
-        $this->context->addViolation($constraint->message, array('%string%' => $value));
-
-        return false;
+        $this->context->buildViolation($constraint->message)
+                ->setParameter('%string%', $value)
+                ->addViolation();
     }
 
 }
