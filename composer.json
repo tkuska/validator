@@ -1,0 +1,22 @@
+{
+    "name": "tkuska/validation-bundle",
+    "type": "symfony-bundle",
+    "version": "1.0",
+    "description": "Validation Bundle for symfony2 framework",
+    "keywords": ["validation", "nip", "pesel", "regon"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tomasz Kuśka",
+            "email": "tomasz.kuska@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/framework-bundle": ">=2.1<2.7"
+    },
+    "autoload": {
+        "psr-4": { "Tkuska\\ValidationBundle\\": "" }
+    },
+    "minimum-stability": "dev"
+}
