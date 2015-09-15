@@ -15,6 +15,7 @@ class NrDowoduValidator extends ConstraintValidator {
             $this->context->buildViolation($constraint->message)
                     ->setParameter('%string%', $value)
                     ->addViolation();
+					return;
         }
         $suma = 0;
         $wagi = array(7, 3, 1, 9, 7, 3, 1, 7, 3);
