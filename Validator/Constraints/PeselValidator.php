@@ -8,10 +8,15 @@ use Symfony\Component\Validator\ConstraintValidator;
 class PeselValidator extends ConstraintValidator {
 
     public function validate($value, Constraint $constraint) {
+		//jeżeli pusta wartość to nie oznacza, że jest błąd, pole może nie być wymagane
+		if(!$value){
+			return true;
+		}
         if (!preg_match('/^[0-9]{11}$/', $value)) { //sprawdzamy czy ciąg ma 11 cyfr
             $this->context->buildViolation($constraint->message)
                     ->setParameter('%string%', $value)
                     ->addViolation();
+					return;
         }
         $arrSteps = array(1, 3, 7, 9, 1, 3, 7, 9, 1, 3); // tablica z odpowiednimi wagami
         $intSum = 0;
