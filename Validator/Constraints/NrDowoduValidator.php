@@ -8,7 +8,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class NrDowoduValidator extends ConstraintValidator {
 
     public function validate($value, Constraint $constraint) {
-        if ($value == '') {
+        if (!$value) {
             return true;
         }
         if (strlen($value) != 9) {

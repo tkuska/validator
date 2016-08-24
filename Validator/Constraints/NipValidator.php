@@ -9,7 +9,7 @@ class NipValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint)
     {
-        if ($value == '') {
+        if (!$value) {
             return true;
         }
         $value = preg_replace("/[^0-9]+/", "", $value);
@@ -17,7 +17,7 @@ class NipValidator extends ConstraintValidator
             $this->context->buildViolation($constraint->message)
                     ->setParameter('%string%', $value)
                     ->addViolation();
-
+			return;
         }
         $arrSteps = array(6, 5, 7, 2, 3, 4, 5, 6, 7);
         $intSum = 0;

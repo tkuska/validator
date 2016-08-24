@@ -8,13 +8,14 @@ use Symfony\Component\Validator\ConstraintValidator;
 class RegonValidator extends ConstraintValidator {
 
     public function validate($value, Constraint $constraint) {
-        if ($value == '') {
+        if (!$value) {
             return true;
         }
         if (strlen($value) != 9) {
             $this->context->buildViolation($constraint->message)
                     ->setParameter('%string%', $value)
                     ->addViolation();
+			return;
         }
         $arrSteps = array(8, 9, 2, 3, 4, 5, 6, 7);
         $intSum = 0;
